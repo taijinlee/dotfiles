@@ -1,0 +1,127 @@
+; ======================================================================
+; Sample .emacs file.
+; Lines starting with ; are comments and do not add functionality.
+; =====================================================================
+
+;; files and modes
+(add-to-list 'auto-mode-alist '("\\.php\\'" . php-mode))
+(add-to-list 'auto-mode-alist '("\\.css\\'" . css-mode))
+(add-to-list 'auto-mode-alist '("\\.scss\\'" . css-mode))
+(add-to-list 'auto-mode-alist '("\\.js\\'" . javascript-mode))
+(add-to-list 'auto-mode-alist '("\\.json\\'" . javascript-mode))
+(add-to-list 'auto-mode-alist '("\\.flex\\'" . c++-mode))
+(add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
+(add-to-list 'auto-mode-alist '("\\.twig\\'" . html-mode))
+
+(setq cssm-indent-level 2)
+
+;; using auto-complete-mode
+(require 'auto-complete)
+(global-auto-complete-mode t)
+
+;; turn all version control off
+(setq vc-handled-backends nil)
+
+;; flymake
+(require 'flymake)
+;; uncomment next line for auto-detecting flymake files
+;(add-hook 'find-file-hook 'flymake-find-file-hook)
+
+;(defun flymake-php-init ()
+;  "Use php to check the syntax of the current file."
+;  (let* ((temp (flymake-init-create-temp-buffer-copy 'flymake-create-temp-inplace))
+;          (local (file-relative-name temp (file-name-directory buffer-file-name))))
+;    (list "/usr/bin/php" (list "-f" local "-l"))))
+
+;(add-to-list 'flymake-err-line-patterns
+;  '("\\(Parse\\|Fatal\\) error: +\\(.*?\\) in \\(.*?\\) on line \\([0-9]+\\)$" 3 4 nil 2))
+
+;(add-to-list 'flymake-allowed-file-name-masks '("\\.php$" flymake-php-init))
+
+;; I don't like the default colors :)
+(set-face-background 'flymake-errline "red4")
+(set-face-background 'flymake-warnline "dark slate blue")
+
+;; Invoke ruby with '-c' to get syntax checking
+(defun flymake-ruby-init ()
+  (let* ((temp-file  (flymake-init-create-temp-buffer-copy
+                      'flymake-create-temp-inplace))
+         (local-file  (file-relative-name
+                       temp-file
+                       (file-name-directory buffer-file-name))))
+    (list "ruby" (list "-c" local-file))))
+
+(push '(".+\\.rb$" flymake-ruby-init) flymake-allowed-file-name-masks)
+(push '("Rakefile$" flymake-ruby-init) flymake-allowed-file-name-masks)
+
+(push '("^\\(.*\\):\\([0-9]+\\): \\(.*\\)$" 1 2 nil 3) flymake-err-line-patterns)
+
+(add-hook 'ruby-mode-hook
+          '(lambda ()
+             ;; Don't want flymake mode for ruby regions in rhtml files and also on read only files
+             (if (and (not (null buffer-file-name)) (file-writable-p buffer-file-name))
+                 (flymake-mode))
+          ))
+
+;(add-hook 'php-mode-hook (lambda () (flymake-mode 1)))
+
+
+;; editor look and feel
+(setq inhibit-splash-screen t) ; Disable splash screen
+(setq visible-bell t) ; flash instead of that annoying bell
+(setq frame-title-format "%b") ; Displays the name of the file being edited in the title bar
+(setq scroll-step 1) ; Makes the screen scroll only one line when the cursor moves past the edge.
+(menu-bar-mode -1) ; get rid of menu bar
+(setq warning-minimum-log-level :error)
+
+;; parenthesis settings
+(show-paren-mode 1) ; Parenthesis matching
+(transient-mark-mode t) ; highlight region between point and mark
+
+;; display line / column
+(setq-default line-number-mode t) ; shows current line number
+(setq column-number-mode t) ; Display column
+
+;; buffer naming
+(setq uniquify-buffer-name-style 'post-forward) ; uniquify buffer name  with directory 
+
+;; tabs
+(setq-default indent-tabs-mode nil) ; spaces instead of tabs by default
+(setq-default c-basic-offset 2) ; set tab to be width of 2
+(setq-default js-indent-level 2) ; set tab to be width of 2
+(c-set-offset 'case-label '+) ; fixing switch statement tabbing
+
+;; fonts
+(global-font-lock-mode t) ; Turn on global font-locking
+
+;; kill + lines
+(setq kill-whole-line t) ; If at beginning of a line, don't make me C-k twice.
+(setq-default next-line-add-newlines nil) ; Don't let me add new lines to the bottom of a file with the downarrow
+
+; key bindings
+(global-set-key "\M-g" 'goto-line)
+(global-set-key "\M-r" 'query-replace-regexp)
+(global-set-key [delete] 'delete-char)    ; Set up the keyboard so the delete key on both the regular keyboard
+(global-set-key [kp-delete] 'delete-char) ; Set up the keyboard so the delete key on both the regular keyboard
+(global-set-key (kbd "\C-x \C-b") 'bs-show)     ; a better buffer list
+
+; Selective display - Activate selective display based on the column at point
+(defun jao-selective-display ()
+  (interactive)
+  (set-selective-display(if selective-display nil
+  (+ 1 (current-column)))))
+(global-set-key "\M-s" 'jao-selective-display)
+
+(set-foreground-color "white")
+(set-background-color "black")
+
+(setq font-lock-face-attributes
+  '((font-lock-comment-face       "Red")) ;MediumOrchid DarkOrchid
+)
+
+(custom-set-faces
+  ;; custom-set-faces was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
+ '(flymake-errline ((((class color) (background dark)) (:background "blue" :weight bold)))))
