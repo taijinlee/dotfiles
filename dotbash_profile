@@ -1,0 +1,155 @@
+# User specific aliases and functions
+export CLICOLOR=1
+export TERM=xterm-color
+export LSCOLORS=ExGxFxDxCxegedAbAgAcAd
+# export MYSQL_CONFIG=/usr/local/mysql/bin/mysql_config
+# export DYLD_LIBRARY_PATH=/usr/local/mysql/lib
+
+source ~/git-completion.bash
+
+[ -s "$HOME/.scm_breeze/scm_breeze.sh" ] && source "$HOME/.scm_breeze/scm_breeze.sh"
+[[ -s "/Users/taijin/.rvm/scripts/rvm" ]] && source "/Users/taijin/.rvm/scripts/rvm"
+
+export SVN_EDITOR=/Users/taijin/.svn.template
+PATH=/usr/local/emacs/bin:/Library/PostgreSQL/current/bin:/usr/local/r17/bin:$PATH   #/usr/local/mysql/bin:$PATH
+
+calc() { awk "BEGIN{ print $* }" ;}
+
+alias sync_music='rsync -av nopuku.com:/storage/music/MP3/ ~/Music/'
+alias sync_music_lossless='rsync -av nopuku.com:/storage1/music/lossless/ ~/Music_lossless/'
+alias sync_music_lossless_to_server='rsync -av ~/Music_lossless/ nopuku.com:/storage1/music/lossless/'
+
+# Source global definitions
+if [ -f /etc/bashrc ]; then
+  . /etc/bashrc
+fi
+
+export PS1='\[\e[0;32m\]\u@\h\[\e[00m\]:\w\$ '
+
+# tags for emacs jumping to tag functionality
+tags () {
+  clean
+  echo 'creating tags...'
+  rm -f ~/trunk/TAGS ~/trunk/TAGS.tmp
+  find ~/trunk -name '*.tp' -o -name '*.php' | xargs -P 100 /usr/local/emacs/bin/etags --language=php --ignore-indentation --members -o ~/trunk/TAGS.tmp --append
+  sed 's/^.*\/trunk/\~\/trunk/' ~/trunk/TAGS.tmp > ~/trunk/TAGS
+  rm -f ~/trunk/TAGS.tmp
+  echo 'done creating tags'
+}
+
+
+#grep () {
+#  if [[ -t 1 ]]; then
+#    /usr/bin/grep --color=always $@ | sed -e $'s/\(^[^:]*\)/\e[35m\\1\e[0m/1'
+#  else
+#    /usr/bin/grep $@
+#  fi
+#}
+
+alias grepnc=/usr/bin/grep
+
+grepf() {
+  if [[ -t 1 ]]; then
+    find . ! -path './.git/*' -a ! -name '.git*' -a ! -path './log*' -a ! -path './node_modules*' -a ! -path './myTests*' -a ! -path './mytests*' -a ! -path './web-build*' | fgrep -vi '.pdf' | fgrep -vi '.gif' | fgrep -vi '.jpg' | fgrep -vi '.jpeg' | fgrep -vi '.png' | fgrep -vi '.swf' | fgrep -vi 'TAGS' | xargs -P 100 /usr/bin/grep --color=always "$@" | sed -e $'s/\(^[^:]*\)/\e[35m\\1\e[0m/1'
+  else
+    find . ! -path './.git/*' -a ! -name '.git*' -a ! -path './log*' -a ! -path './node_modules*' -a ! -path './myTests*' -a ! -path './mytests*' -a ! -path './web-build*' | fgrep -vi '.pdf' | fgrep -vi '.gif' | fgrep -vi '.jpg' | fgrep -vi '.jpeg' | fgrep -vi '.png' | fgrep -vi '.swf' | fgrep -vi 'TAGS' | xargs -P 100 /usr/bin/grep "$@"
+  fi
+}
+
+# do pre/post actions for svn
+svn () {
+  errors=0
+  if [[ $1 == 'commit' || $1 == 'ci' ]]; then
+    _do_diff_syntax_check $@
+    errors=$?
+  fi
+  if [[ $1 == 'diff' ]]; then
+    if [[ -t 1 ]]; then
+      username=`whoami`
+      /usr/bin/svn $@ > /tmp/svn.$username.diff
+      /usr/local/bin/pygmentize /tmp/svn.$username.diff
+    else
+      /usr/bin/svn $@
+    fi
+  elif [[ $1 == 'st' ]]; then
+    /usr/bin/svn $@ | grepnc -v .fuse
+  else
+    if [[ $errors == 0 ]]; then
+      /usr/bin/svn $@
+    fi
+  fi
+
+  if [[ $1 == 'up' ]]; then
+    tags
+  fi
+}
+
+_do_diff_syntax_check () {
+  shift
+  echo "Syntax Checking..."
+
+  # Include the following filetypes
+  included=(php tp tpt)
+
+  hasError=0
+  for file in `/usr/bin/svn st $@ | awk '{ if ($2 == "+") { print $3 } else if ($1 == "M" || $1 == "A" || $1 == "AM") { print $2 } }'`; do
+    checkSyntax=0
+    for ext in ${included[@]}; do
+      if [ "${file#*.}" == "$ext" ]; then
+        checkSyntax=1
+        break
+      fi
+    done
+    if [ $checkSyntax -ne 1 ]; then
+      echo "Skipping $file"
+    fi
+
+    echo "Checking $file"
+    error=`/usr/bin/php -l $file | /usr/bin/grep -v 'No syntax errors detected'`
+    if [[ $error != '' ]]; then
+      echo $error
+      hasError=1
+    fi
+  done
+
+  if [[ $hasError == 0 ]]; then
+    echo "All Clear"
+  fi
+  echo
+  return $hasError
+}
+
+
+# clear logs
+cl () {
+  find /Users/taijin/logs/* -exec cp /dev/null {} \;
+  echo 'logs cleared'
+}
+
+# display logs
+logs () {
+  find /Users/taijin/logs/* -exec cat {} \; | pretty
+}
+
+# clean emacs files
+clean() {
+  dir=$1
+  if [ -z $1 ]; then
+    dir="." 
+  fi
+  echo 'removing files:'
+  find $dir \( -type f -o -type l \) -a \( -iname "*~" -o -iname "*#" -o -iname "svn-commit*.tmp*" -o -iname ".\#*" -o -iname "*_flymake*" \) -exec rm -v {} +
+  echo 'done'
+}
+
+pretty () {
+  sed -e 's/\\n/\
+/g' \
+      -e $'s/\[\(web.*\.com\)\]/\[\e[32m\\1\e[0m\]/g' \
+      -e $'s/\[\([A-Z]\{1\}[a-z]\{2\} [A-Z]\{1\}[a-z]\{2\} [0-9]\{1,2\} [0-9]\{2\}:[0-9]\{2\}:[0-9]\{2\} [0-9]\{4\}\)\]/\[\e[33m\\1\e[0m\]/g' \
+      -e $'s/\[\(error\)\]/\[\e[31m\\1\e[0m\]/g' \
+      -e $'s/\[\(notice\)\]/\[\e[32m\\1\e[0m\]/g' \
+      -e $'s/\(PHP Fatal error\)/\e[31;5m\\1\e[0m/g' \
+      -e $'s/\(\[client.*File does not exist.*\)/\e[34m\\1\e[0m/g' \
+      -e $'s/\(mod_gzip:.*\)/\e[34m\\1\e[0m/g'
+}
