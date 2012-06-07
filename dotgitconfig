@@ -1,0 +1,21 @@
+[user]
+	name = Tai-Jin Lee
+	email = taijin@gmail.com
+[github]
+	user = taijinlee
+[core]
+	editor = emacs
+	pager = cat
+[color]
+	diff = auto
+	status = auto
+	branch = auto
+
+[alias]
+  st = status
+  ci = commit
+  br = branch
+  co = checkout
+  staged = diff --cached
+  l = log --graph -n 30 --pretty=tformat:'%C(yellow)%h%Creset -%C(bold blue)%d%C(reset) %s %C(bold green)%an %C(reset)%C(cyan)(%cr)%C(reset)'
+  la = log --graph --pretty=tformat:'%C(yellow)%h%Creset -%C(bold blue)%d%C(reset) %s %C(bold green)%an %C(reset)%C(cyan)(%cr)%C(reset)'
