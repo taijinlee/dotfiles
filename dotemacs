@@ -88,7 +88,7 @@
 (setq-default indent-tabs-mode nil) ; spaces instead of tabs by default
 (setq-default c-basic-offset 2) ; set tab to be width of 2
 (setq-default js-indent-level 2) ; set tab to be width of 2
-(setq cssm-indent-level 2) ; set tab to be weidth of 2
+(setq css-indent-offset 2) ; set tab to be width of 2 for css
 (c-set-offset 'case-label '+) ; fixing switch statement tabbing
 
 ;; fonts
