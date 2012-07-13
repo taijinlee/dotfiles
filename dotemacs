@@ -72,6 +72,7 @@
 (setq scroll-step 1) ; Makes the screen scroll only one line when the cursor moves past the edge.
 (menu-bar-mode -1) ; get rid of menu bar
 (setq warning-minimum-log-level :error)
+(setq-default show-trailing-whitespace t)
 
 ;; parenthesis settings
 (show-paren-mode 1) ; Parenthesis matching
@@ -124,4 +125,6 @@
   ;; If you edit it by hand, you could mess it up, so be careful.
   ;; Your init file should contain only one such instance.
   ;; If there is more than one, they won't work right.
- '(flymake-errline ((((class color) (background dark)) (:background "blue" :weight bold)))))
+ '(flymake-errline ((((class color) (background dark)) (:background "blue" :weight bold))))
+ ; '(trailing-whitespace ((((class color) (background dark)) (:background "red" :weight light))))
+)
