@@ -9,6 +9,7 @@ source ~/.git-completion.bash
 
 [ -s "$HOME/.scm_breeze/scm_breeze.sh" ] && source "$HOME/.scm_breeze/scm_breeze.sh"
 [[ -s "/Users/taijin/.rvm/scripts/rvm" ]] && source "/Users/taijin/.rvm/scripts/rvm"
+. $HOME/code/nvm/nvm.sh
 
 export SVN_EDITOR=/Users/taijin/.svn.template
 PATH=/usr/local/emacs/bin:/Library/PostgreSQL/current/bin:/usr/local/r17/bin:$PATH   #/usr/local/mysql/bin:$PATH
