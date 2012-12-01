@@ -15,8 +15,9 @@
 
 
 ;; using auto-complete-mode
-(require 'auto-complete)
-(global-auto-complete-mode t)
+(require 'auto-complete-config)
+(add-to-list 'ac-modes 'html-mode)
+(ac-config-default)
 
 ;; turn all version control off
 (setq vc-handled-backends nil)

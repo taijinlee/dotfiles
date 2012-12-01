@@ -7,14 +7,18 @@ export LSCOLORS=ExGxFxDxCxegedAbAgAcAd
 
 source ~/.git-completion.bash
 
+
 [ -s "$HOME/.scm_breeze/scm_breeze.sh" ] && source "$HOME/.scm_breeze/scm_breeze.sh"
 [[ -s "/Users/taijin/.rvm/scripts/rvm" ]] && source "/Users/taijin/.rvm/scripts/rvm"
-. $HOME/code/nvm/nvm.sh
+source $HOME/code/nvm/nvm.sh
 
 export SVN_EDITOR=/Users/taijin/.svn.template
-PATH=/usr/local/emacs/bin:/Library/PostgreSQL/current/bin:/usr/local/r17/bin:$PATH   #/usr/local/mysql/bin:$PATH
+PATH=/usr/local/emacs/bin:/usr/local/mongodb/bin:/Library/PostgreSQL/current/bin:/usr/local/r17/bin:$PATH   #/usr/local/mysql/bin:$PATH
 
 calc() { awk "BEGIN{ print $* }" ;}
+
+alias mongo_start='sudo /usr/local/mongodb/bin/mongod --fork --logpath /usr/local/mongodb/logs/mongodb.log --logappend --dbpath /usr/local/mongodb/data'
+
 
 alias sync_music='rsync -av nopuku.com:/storage/music/MP3/ ~/Music/'
 alias sync_music_lossless='rsync -av nopuku.com:/storage1/music/lossless/ ~/Music_lossless/'
@@ -51,9 +55,9 @@ alias grepnc=/usr/bin/grep
 
 grepf() {
   if [[ -t 1 ]]; then
-    find . ! -path './.git/*' -a ! -name '.git*' -a ! -path './log*' -a ! -path './node_modules*' -a ! -path './myTests*' -a ! -path './mytests*' -a ! -path './web-build*' | fgrep -vi '.pdf' | fgrep -vi '.gif' | fgrep -vi '.jpg' | fgrep -vi '.jpeg' | fgrep -vi '.png' | fgrep -vi '.swf' | fgrep -vi 'TAGS' | xargs -P 100 /usr/bin/grep --color=always "$@" | sed -e $'s/\(^[^:]*\)/\e[35m\\1\e[0m/1'
+    find . ! -path './.git/*' -a ! -name '.git*' -a ! -path './log*' -a ! -path './node_modules*' -a ! -path './myTests*' -a ! -path './mytests*' -a ! -path './web-build*' -a ! -iname '.pdf' -a ! -iname  '.gif' -a ! -iname '.jpg' -a ! -iname '.jpeg' -a ! -iname '.png' -print0 | xargs -0 -P 100 /usr/bin/grep --color=always "$@" | sed -e $'s/\(^[^:]*\)/\e[35m\\1\e[0m/1'
   else
-    find . ! -path './.git/*' -a ! -name '.git*' -a ! -path './log*' -a ! -path './node_modules*' -a ! -path './myTests*' -a ! -path './mytests*' -a ! -path './web-build*' | fgrep -vi '.pdf' | fgrep -vi '.gif' | fgrep -vi '.jpg' | fgrep -vi '.jpeg' | fgrep -vi '.png' | fgrep -vi '.swf' | fgrep -vi 'TAGS' | xargs -P 100 /usr/bin/grep "$@"
+    find . ! -path './.git/*' -a ! -name '.git*' -a ! -path './log*' -a ! -path './node_modules*' -a ! -path './myTests*' -a ! -path './mytests*' -a ! -path './web-build*' -a ! -iname '.pdf' -a ! -iname  '.gif' -a ! -iname '.jpg' -a ! -iname '.jpeg' -a ! -iname '.png' -print0 | xargs -0 -P 100 /usr/bin/grep --color=always "$@"
   fi
 }
 
