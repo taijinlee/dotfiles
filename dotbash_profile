@@ -19,7 +19,6 @@ calc() { awk "BEGIN{ print $* }" ;}
 
 alias mongo_start='sudo /usr/local/mongodb/bin/mongod --fork --logpath /usr/local/mongodb/logs/mongodb.log --logappend --dbpath /usr/local/mongodb/data'
 
-
 alias sync_music='rsync -av nopuku.com:/storage/music/MP3/ ~/Music/'
 alias sync_music_lossless='rsync -av nopuku.com:/storage1/music/lossless/ ~/Music_lossless/'
 alias sync_music_lossless_to_server='rsync -av ~/Music_lossless/ nopuku.com:/storage1/music/lossless/'
@@ -41,15 +40,6 @@ tags () {
   rm -f ~/trunk/TAGS.tmp
   echo 'done creating tags'
 }
-
-
-#grep () {
-#  if [[ -t 1 ]]; then
-#    /usr/bin/grep --color=always $@ | sed -e $'s/\(^[^:]*\)/\e[35m\\1\e[0m/1'
-#  else
-#    /usr/bin/grep $@
-#  fi
-#}
 
 alias grepnc=/usr/bin/grep
 
