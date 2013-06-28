@@ -7,7 +7,6 @@ export LSCOLORS=ExGxFxDxCxegedAbAgAcAd
 
 source ~/.git-completion.bash
 
-
 [ -s "$HOME/.scm_breeze/scm_breeze.sh" ] && source "$HOME/.scm_breeze/scm_breeze.sh"
 [[ -s "/Users/taijin/.rvm/scripts/rvm" ]] && source "/Users/taijin/.rvm/scripts/rvm"
 source $HOME/code/nvm/nvm.sh
@@ -45,9 +44,9 @@ alias grepnc=/usr/bin/grep
 
 grepf() {
   if [[ -t 1 ]]; then
-    find . ! -path './.git/*' -a ! -name '.git*' -a ! -path './log*' -a ! -path './node_modules*' -a ! -path './myTests*' -a ! -path './mytests*' -a ! -path './web-build*' -a ! -iname '.pdf' -a ! -iname  '.gif' -a ! -iname '.jpg' -a ! -iname '.jpeg' -a ! -iname '.png' -print0 | xargs -0 -P 100 /usr/bin/grep --color=always "$@" | sed -e $'s/\(^[^:]*\)/\e[35m\\1\e[0m/1'
+    find . ! -path './.git/*' -a ! -name '.git*' -a ! -path './log*' -a ! -path './node_modules*' -a ! -path './myTests*' -a ! -path './mytests*' -a ! -path './web-build*' -a ! -iname '.pdf' -a ! -iname  '.gif' -a ! -iname '.jpg' -a ! -iname '.jpeg' -a ! -iname '.png' -print0 | xargs -0 -P 100 /usr/bin/grep --color=always "$@" | cut -c 1-200 | sed -e $'s/\(^[^:]*\)/\e[35m\\1\e[0m/1'
   else
-    find . ! -path './.git/*' -a ! -name '.git*' -a ! -path './log*' -a ! -path './node_modules*' -a ! -path './myTests*' -a ! -path './mytests*' -a ! -path './web-build*' -a ! -iname '.pdf' -a ! -iname  '.gif' -a ! -iname '.jpg' -a ! -iname '.jpeg' -a ! -iname '.png' -print0 | xargs -0 -P 100 /usr/bin/grep --color=always "$@"
+    find . ! -path './.git/*' -a ! -name '.git*' -a ! -path './log*' -a ! -path './node_modules*' -a ! -path './myTests*' -a ! -path './mytests*' -a ! -path './web-build*' -a ! -iname '.pdf' -a ! -iname  '.gif' -a ! -iname '.jpg' -a ! -iname '.jpeg' -a ! -iname '.png' -print0 | xargs -0 -P 100 /usr/bin/grep --color=none "$@" | cut -c 1-200
   fi
 }
 
@@ -112,13 +111,6 @@ _do_diff_syntax_check () {
   fi
   echo
   return $hasError
-}
-
-
-# clear logs
-cl () {
-  find /Users/taijin/logs/* -exec cp /dev/null {} \;
-  echo 'logs cleared'
 }
 
 # display logs

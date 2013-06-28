@@ -17,5 +17,6 @@
   br = branch
   co = checkout
   staged = diff --cached
-  l = log --graph -n 30 --pretty=tformat:'%C(yellow)%h%Creset -%C(bold blue)%d%C(reset) %s %C(bold green)%an %C(reset)%C(cyan)(%cr)%C(reset)'
-  la = log --graph --pretty=tformat:'%C(yellow)%h%Creset -%C(bold blue)%d%C(reset) %s %C(bold green)%an %C(reset)%C(cyan)(%cr)%C(reset)'
+  l = log --graph -n 30 --pretty=tformat:'%C(yellow)%h%Creset -%C(bold red)%d%C(reset) %s %C(bold green)%an %C(reset)%C(cyan)(%cr)%C(reset)'
+  la = log --graph --pretty=tformat:'%C(yellow)%h%Creset -%C(bold red)%d%C(reset) %s %C(bold green)%an %C(reset)%C(cyan)(%cr)%C(reset)'
+  fc = show --pretty="format:" --name-only
