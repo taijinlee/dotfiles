@@ -1,6 +1,8 @@
 [user]
 	name = Tai-Jin Lee
 	email = taijin@gmail.com
+[sift]
+        repo = ~/code/sift
 [github]
 	user = taijinlee
 [core]
@@ -20,3 +22,5 @@
   l = log --graph -n 30 --pretty=tformat:'%C(yellow)%h%Creset -%C(bold red)%d%C(reset) %s %C(bold green)%an %C(reset)%C(cyan)(%cr)%C(reset)'
   la = log --graph --pretty=tformat:'%C(yellow)%h%Creset -%C(bold red)%d%C(reset) %s %C(bold green)%an %C(reset)%C(cyan)(%cr)%C(reset)'
   fc = show --pretty="format:" --name-only
+[push]
+	default = current

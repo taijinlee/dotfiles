@@ -5,22 +5,22 @@ export LSCOLORS=ExGxFxDxCxegedAbAgAcAd
 # export MYSQL_CONFIG=/usr/local/mysql/bin/mysql_config
 # export DYLD_LIBRARY_PATH=/usr/local/mysql/lib
 
-source ~/.git-completion.bash
+alias usage='du -chd1'
 
+source ~/.git-completion.bash
+PATH=/usr/local/Cellar/emacs/24.3/bin:/usr/local/Cellar/git/1.8.4/bin:/usr/local/mongodb/bin:/Library/PostgreSQL/current/bin:/usr/local/r17/bin:$PATH   #/usr/local/mysql/bin:$PATH
+
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
 [ -s "$HOME/.scm_breeze/scm_breeze.sh" ] && source "$HOME/.scm_breeze/scm_breeze.sh"
-[[ -s "/Users/taijin/.rvm/scripts/rvm" ]] && source "/Users/taijin/.rvm/scripts/rvm"
+
+source $HOME/code/sift/tools/envsetup.sh
 source $HOME/code/nvm/nvm.sh
 
 export SVN_EDITOR=/Users/taijin/.svn.template
-PATH=/usr/local/emacs/bin:/usr/local/mongodb/bin:/Library/PostgreSQL/current/bin:/usr/local/r17/bin:$PATH   #/usr/local/mysql/bin:$PATH
 
 calc() { awk "BEGIN{ print $* }" ;}
 
 alias mongo_start='sudo /usr/local/mongodb/bin/mongod --fork --logpath /usr/local/mongodb/logs/mongodb.log --logappend --dbpath /usr/local/mongodb/data'
-
-alias sync_music='rsync -av nopuku.com:/storage/music/MP3/ ~/Music/'
-alias sync_music_lossless='rsync -av nopuku.com:/storage1/music/lossless/ ~/Music_lossless/'
-alias sync_music_lossless_to_server='rsync -av ~/Music_lossless/ nopuku.com:/storage1/music/lossless/'
 
 # Source global definitions
 if [ -f /etc/bashrc ]; then
@@ -44,9 +44,9 @@ alias grepnc=/usr/bin/grep
 
 grepf() {
   if [[ -t 1 ]]; then
-    find . ! -path './.git/*' -a ! -name '.git*' -a ! -path './log*' -a ! -path './node_modules*' -a ! -path './myTests*' -a ! -path './mytests*' -a ! -path './web-build*' -a ! -iname '.pdf' -a ! -iname  '.gif' -a ! -iname '.jpg' -a ! -iname '.jpeg' -a ! -iname '.png' -print0 | xargs -0 -P 100 /usr/bin/grep --color=always "$@" | cut -c 1-200 | sed -e $'s/\(^[^:]*\)/\e[35m\\1\e[0m/1'
+    find . -type f -a ! -path './.git/*' -a ! -name '.git*' -a ! -path './node_modules*' -a ! -path './myTests*' -a ! -path './mytests*' -a ! -path './web-build*' -a ! -iname '.pdf' -a ! -iname  '.gif' -a ! -iname '.jpg' -a ! -iname '.jpeg' -a ! -iname '.png' -print0 | xargs -0 -P 100 /usr/bin/grep --color=always "$@" | cut -c 1-200 | sed -e $'s/\(^[^:]*\)/\e[35m\\1\e[0m/1'
   else
-    find . ! -path './.git/*' -a ! -name '.git*' -a ! -path './log*' -a ! -path './node_modules*' -a ! -path './myTests*' -a ! -path './mytests*' -a ! -path './web-build*' -a ! -iname '.pdf' -a ! -iname  '.gif' -a ! -iname '.jpg' -a ! -iname '.jpeg' -a ! -iname '.png' -print0 | xargs -0 -P 100 /usr/bin/grep --color=none "$@" | cut -c 1-200
+    find . -type f -a ! -path './.git/*' -a ! -name '.git*' -a ! -path './node_modules*' -a ! -path './myTests*' -a ! -path './mytests*' -a ! -path './web-build*' -a ! -iname '.pdf' -a ! -iname  '.gif' -a ! -iname '.jpg' -a ! -iname '.jpeg' -a ! -iname '.png' -print0 | xargs -0 -P 100 /usr/bin/grep --color=none "$@" | cut -c 1-200
   fi
 }
 
