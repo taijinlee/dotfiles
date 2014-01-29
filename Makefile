@@ -1,5 +1,5 @@
 ROOT = `pwd`
-DOTFILES = emacs gitconfig bash_profile git-completion.bash
+DOTFILES = emacs gitconfig bash_profile git-completion.bash slate
 
 install:
 	$(foreach dotfile, $(DOTFILES), \
