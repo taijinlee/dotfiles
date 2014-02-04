@@ -81,8 +81,8 @@
 
 ;(add-hook 'php-mode-hook (lambda () (flymake-mode 1)))
 
-
 ;; editor look and feel
+(setq initial-scratch-message "")
 (setq inhibit-splash-screen t) ; Disable splash screen
 (setq visible-bell t) ; flash instead of that annoying bell
 (setq frame-title-format "%b") ; Displays the name of the file being edited in the title bar
