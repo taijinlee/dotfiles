@@ -7,8 +7,8 @@
 (add-to-list 'auto-mode-alist '("\\.php\\'" . php-mode))
 (add-to-list 'auto-mode-alist '("\\.css\\'" . css-mode))
 (add-to-list 'auto-mode-alist '("\\.scss\\'" . sass-mode))
-(add-to-list 'auto-mode-alist '("\\.js\\'" . javascript-mode))
-(add-to-list 'auto-mode-alist '("\\.json\\'" . javascript-mode))
+(add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
+(add-to-list 'auto-mode-alist '("\\.json\\'" . js2-mode))
 (add-to-list 'auto-mode-alist '("\\.flex\\'" . c++-mode))
 (add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
 (add-to-list 'auto-mode-alist '("\\.twig\\'" . html-mode))
@@ -114,6 +114,7 @@
 (setq-default indent-tabs-mode nil) ; spaces instead of tabs by default
 (setq-default c-basic-offset 4) ; set tab to be width of 2
 (setq-default js-indent-level 2) ; set tab to be width of 2
+(setq-default js2-basic-offset 2)
 (setq-default java-indent-level 4) ; set tab to be width of 4
 (setq css-indent-offset 2) ; set tab to be width of 2 for css
 (c-set-offset 'case-label '+) ; fixing switch statement tabbing
@@ -147,10 +148,19 @@
 )
 
 (custom-set-faces
-  ;; custom-set-faces was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
  '(flymake-errline ((((class color) (background dark)) (:background "blue" :weight bold))))
- ; '(trailing-whitespace ((((class color) (background dark)) (:background "red" :weight light))))
-)
+ '(font-lock-builtin-face ((t (:foreground "brightmagenta"))))
+ '(font-lock-function-name-face ((t (:foreground "color-33"))))
+ '(font-lock-keyword-face ((t (:foreground "color-45"))))
+ '(font-lock-string-face ((t (:foreground "brightgreen"))))
+ '(font-lock-variable-name-face ((t (:foreground "Sienna")))))
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
