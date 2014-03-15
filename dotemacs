@@ -91,6 +91,14 @@
 (setq warning-minimum-log-level :error)
 (setq-default show-trailing-whitespace t)
 
+
+(require 'whitespace)
+(global-whitespace-mode t)
+
+(setq whitespace-line-column 99)
+(setq whitespace-style
+      '(face lines-tail))
+
 ;; parenthesis settings
 (show-paren-mode 1) ; Parenthesis matching
 (transient-mark-mode t) ; highlight region between point and mark
