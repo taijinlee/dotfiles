@@ -1,6 +1,7 @@
 # User specific aliases and functions
 export CLICOLOR=1
-export TERM=xterm-color
+# giving terminal more colors
+export TERM=xterm-256color
 export LSCOLORS=ExGxFxDxCxegedAbAgAcAd
 # export MYSQL_CONFIG=/usr/local/mysql/bin/mysql_config
 # export DYLD_LIBRARY_PATH=/usr/local/mysql/lib
